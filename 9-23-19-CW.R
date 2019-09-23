@@ -25,7 +25,16 @@ options("digits.secs"=3)
 d$dateTime<-str_c(d$date, d$time, sep=" ")
 d$dateTime<-as.POSIXct(strptime(x=d$dateTime, format="%m/%d/%y %H:%M:%S", tz='America/New_York'))
 d$dateTime
+
 #list of tz dtaabase timezones
 
+#Read Excel files
+
+install.packages("openxlsx")
+library(openxlsx)
+
+openXL(file="import_datasets/Aurelia_SEAMAP_2012_2018_30mincell.xlsx")
+
+d<-read.table(file="import_data")
 
 
