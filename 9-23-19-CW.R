@@ -1,4 +1,6 @@
-d = read.table(file="ISIIS201405291242.txt", skip = 10, header = T, sep = '\t')
+d = read.table(file='ISIIS201405291242.txt', skip = 10, header = T, sep = "\t")
+stringsAsfactors=FALSE, quote="\",check.names=FALSE,
+na.strings="9999.99"
 file<-list.files(full.names=TRUE, pattern="ISIIS")
 file<-as.character(file)
 
@@ -20,13 +22,19 @@ d$secs<- as.numeric(str_sub(string=d$Time,start=-5, end=-1))
 d$time<-str_c(d$hour,d$min,d$secs,sep = ":")
 
 d$date<-date
+head(d$dateTime)
 options("digits.secs"=3)
 
 d$dateTime<-str_c(d$date, d$time, sep=" ")
-d$dateTime<-as.POSIXct(strptime(x=d$dateTime, format="%m/%d/%y %H:%M:%S", tz='America/New_York'))
+
+d$dateTime<-as.POSIXct(strptime(x=d$dateTime, 
+format="%m/%d/%y %H:%M:%S",tz='America/New_York'))
+
 d$dateTime<-d$dateTime-time.zone.change * 3600
 
-#list of tz dtaabase timezones
+d$changetime<-format(d$dateTime, tz<- 'America/Los_Angeles')
+
+#list of tz database timezones
 
 #Read Excel files
 
@@ -63,5 +71,12 @@ library(reads1)
 s<-read_xlsx(path="Aurelia_SEAMAP_2012-2018_30minCell.xlsx")
 s1
 
+#tapply
+a=tapply=d$H, INDEX=list(df$(tea,ID), FUN=sum)
+a.df=as.data.frame(a)
+a.f$ID=row.names(a)
 
+a2.df=data.frame(tid=row.names(a),mean=as.numeric(a))
+b=df %-% group_by(teamID) %-% summarise(totalHits=sum(H))
+c=aggregate(s=df$H, by= list(df$teamID, FUN=sum))
 
